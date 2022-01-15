@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SlugPlanners</title>
   <link rel="stylesheet" href="index.css" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 
@@ -24,28 +25,58 @@
 
   <nav class="sidebar">
     <div class="text">
-       Menu
+       Main Menu
     </div>
     <ul>
-       <li class="active"><a href="#">Current Schedule</a></li>
-       <li>
-          <a href="#" class="feat-btn">Class List
-          <span class="fas fa-caret-down first"></span>
-          </a>
-          <ul class="feat-show">
-             <li><a href="#">Major/Minor</a></li>
-             <li><a href="#">General Education</a></li>
-          </ul>
-       </li>
-       <li><a href="#">Calendar</a></li>
-       <li><a href="#">Academic Report</a></li>
-       <li><a href="#">Resources</a></li>
-    </ul>
+      <li class="active"><a href="#">Current Schedule</a></li>
+      <li>
+         <a href="#" class="class-btn">Class List
+         <span class="fas fa-caret-down first"></span>
+         </a>
+         <ul class="class-show">
+            <li><a href="#">Major/Minor</a></li>
+            <li><a href="#">General Education</a></li>
+         </ul>
+      </li>
+      <li><a href="#">Calendar</a></li>
+      <li><a href="#">Academic Report</a></li>
+      <li>
+        <a href="#" class="res-btn">Resources
+        <span class="fas fa-caret-down second"></span>
+        </a>
+        <ul class="res-show">
+           <li><a href="#">idk</a></li>
+           <li><a href="#">idk</a></li>
+        </ul>
+      </li>
+   </ul>
+  </nav> 
+  
+  <nav class="search">
     <form action="#">
       <input type="search" class="search-data" placeholder="Search" required>
       <button type="submit" class="fas fa-search"></button>
-   </form>
- </nav>
+    </form>
+  </nav>
+
+  <script>
+  $('.menu-icon').click(function(){
+    $(this).toggleClass("click");
+    $('.sidebar').toggleClass("show");
+  });
+    $('.class-btn').click(function(){
+      $('nav ul .class-show').toggleClass("show");
+      $('nav ul .first').toggleClass("rotate");
+    });
+    $('.res-btn').click(function(){
+      $('nav ul .res-show').toggleClass("show2");
+      $('nav ul .second').toggleClass("rotate");
+    });
+    $('nav ul li').click(function(){
+      $(this).addClass("active").siblings().removeClass("active");
+    });
+  </script>
+
 
 
 
