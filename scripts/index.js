@@ -10,6 +10,8 @@ const fetchData = async () => {
 
 fetchData().then((data) => {
   const [catalogMajors, catalogCourses, slugShort, slugLong] = data;
+  const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
+  const years = ['2020-2021', '2021-2022', '2022-2023', '2023-2024'];
 
   // search bar functionality
   const searchBar = document.getElementsByClassName('search-data')[0];
@@ -18,32 +20,79 @@ fetchData().then((data) => {
     const searchDropdown = document.createElement('ul');
 
     searchDropdown.className = 'search-dropdown';
-    document.getElementsByTagName('body')[0].insertBefore(searchDropdown, document.getElementById('plannercontainer'));
+    document.getElementsByTagName('form')[0].insertBefore(searchDropdown, document.getElementsByClassName('search-data')[0].nextSibling);
 
     catalogCourses.forEach(category => {
       category.list.forEach(course => {
         const newCourse = document.createElement('li');
-        const newCourseInfo = document.createElement('div');
-        const newCourseUrl = document.createElement('a');
-        const newCourseAdd = document.createElement('button');
 
-        newCourseUrl.href = course.url;
-        newCourseUrl.target = '_blank';
-        newCourseUrl.appendChild(document.createTextNode('Catalog page'));
+        const addMenu = document.createElement('div');
 
-        newCourseAdd.classList.add('course-add');
-        newCourseAdd.appendChild(document.createTextNode('Add!'));
-        newCourseAdd.addEventListener('click', promptAddCourse);
+        const addQuarter = document.createElement('select');
+        const defaultQuarter = document.createElement('option');
+        defaultQuarter.value = '';
+        defaultQuarter.disabled = true;
+        defaultQuarter.hidden = true;
+        defaultQuarter.selected = true;
+        defaultQuarter.id = 'default-quarter';
+        defaultQuarter.appendChild(document.createTextNode('Select quarter'));
 
-        newCourseInfo.classList.add('course-info');
-        newCourseInfo.appendChild(newCourseUrl);
-        newCourseInfo.appendChild(newCourseAdd);
+        for (let i = 0, l = quarters.length; i < l; i++) {
+          const q = document.createElement('option');
+          q.value = i;
+          q.appendChild(document.createTextNode(quarters[i]));
+          addQuarter.appendChild(q);
+        }
+
+        addQuarter.id = 'quarter-select';
+        addQuarter.appendChild(defaultQuarter);
+
+        const addYear = document.createElement('select');
+        const defaultYear = document.createElement('option');
+        defaultYear.value = '';
+        defaultYear.disabled = true;
+        defaultYear.hidden = true;
+        defaultYear.selected = true;
+        defaultYear.id = 'default-year';
+        defaultYear.appendChild(document.createTextNode('Select year'));
+
+        for (let i = 0, l = years.length; i < l; i++) {
+          const y = document.createElement('option');
+          y.value = i;
+          y.appendChild(document.createTextNode(years[i]));
+          addYear.appendChild(y);
+        }
+
+        addYear.id = 'year-select';
+        addYear.appendChild(defaultYear);
+
+        addMenu.classList.add('add-menu');
+        addMenu.appendChild(addQuarter);
+        addMenu.appendChild(addYear);
+
+        const info = document.createElement('div');
+        const infoUrl = document.createElement('a');
+        const infoAddButton = document.createElement('button');
+
+        infoUrl.href = course.url;
+        infoUrl.target = '_blank';
+        infoUrl.appendChild(document.createTextNode('Catalog page'));
+
+        infoAddButton.type = 'button';
+        infoAddButton.classList.add('course-add-button');
+        infoAddButton.appendChild(document.createTextNode('Add!'));
+        infoAddButton.addEventListener('click', addCourse);
+
+        info.classList.add('course-info');
+        info.appendChild(infoUrl);
+        info.appendChild(addMenu);
+        info.appendChild(infoAddButton);
 
         newCourse.classList.add('course-option');
-        newCourse.info = newCourseInfo;
+        newCourse.info = info;
         newCourse.addEventListener('click', showCourseInfo);
         newCourse.appendChild(document.createTextNode(`${course.code} ${course.name}`));
-        newCourse.appendChild(newCourseInfo);
+        newCourse.appendChild(info);
         searchDropdown.appendChild(newCourse);
       });
     });
@@ -87,16 +136,62 @@ fetchData().then((data) => {
   const showCourseInfo = event => {
     const option = event.target;
     
-    option.info.style.display === 'block'
-      ? option.info.style.display = 'none'
-      : option.info.style.display = 'block';
+    if (option.info) {
+      option.info.style.display === 'block'
+        ? option.info.style.display = 'none'
+        : option.info.style.display = 'block';
+    }
   };
 
-  const promptAddCourse = event => {
-    const option = event.target;
-    const course = event.target.course;
+  const addCourse = event => {
+    pass
   };
 
+  // planner table
+  const plannerContainer = document.getElementById('plannercontainer');
+
+  const createPlanner = () => {
+    const planner = document.createElement('table');
+
+    planner.className = 'planner';
+    document.getElementById('plannercontainer').appendChild(planner);
+
+    const head = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    headRow.appendChild(document.createElement('td'));
+
+    quarters.forEach(c => {
+      const colHead = document.createElement('th');
+      colHead.classList.add('planner-col-head');
+      colHead.scope = 'col';
+      colHead.appendChild(document.createTextNode(c));
+      headRow.appendChild(colHead);
+    });
+
+    head.classList.add('head-row');
+    head.appendChild(headRow);
+    planner.appendChild(head);
+
+    years.forEach(r => {
+      const row = document.createElement('tr');
+      const rowHead = document.createElement('th');
+
+      rowHead.classList.add('planner-row-head');
+      rowHead.scope = 'row';
+      rowHead.appendChild(document.createTextNode(r));
+      row.appendChild(rowHead);
+
+      for (let i = 0, l = quarters.length; i < l; i++) {
+        const cell = document.createElement('td');
+        cell.classList.add('planner-cell');
+        row.appendChild(cell);
+      }
+      planner.appendChild(row);
+    });
+  };
+
+  // set it all up
   createSearchDropdown();
   searchBar.addEventListener('keyup', updateSearchDropdown);
+  createPlanner();
 });
