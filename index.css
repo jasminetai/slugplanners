@@ -1,0 +1,31 @@
+/* a css comment! */
+
+body {
+  background-color: #cce7ff;
+  color: #000;
+  font: 16px/1.5 verdana, arial;
+  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+}
+
+#banner {
+  text-align: center;
+  margin: 32px 0;
+}
+
+#banner__header {
+  margin: 6px 0;
+  text-shadow: 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff;
+}
+
+#banner__description {
+  margin: 6px 0;
+}
+
+.section {
+  margin: 32px 24px;
+}
+
+#plannercontainer {
+  padding: 24px 32px;
+  background-color: #fff;
+}
