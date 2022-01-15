@@ -1,0 +1,23 @@
+{
+  "name": "slugplanners",
+  "version": "0.0.1",
+  "description": "A site to help UCSC students plan out their schedules over several years.",
+  "main": "scripts/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasminetai/slugplanners.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasminetai/slugplanners/issues"
+  },
+  "homepage": "https://github.com/jasminetai/slugplanners#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10"
+  }
+}
