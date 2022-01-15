@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SlugPlanners</title>
   <link rel="stylesheet" href="index.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 
 <body>
@@ -16,6 +17,37 @@
     <h1 id="banner__header">SlugPlanners</h1>
     <p id="banner__description">for all your quarter-by-quarter planning needs</p>
   </div>
+
+  <div class="menu-icon">
+    <span class="fas fa-bars"></span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="text">
+       Menu
+    </div>
+    <ul>
+       <li class="active"><a href="#">Current Schedule</a></li>
+       <li>
+          <a href="#" class="feat-btn">Class List
+          <span class="fas fa-caret-down first"></span>
+          </a>
+          <ul class="feat-show">
+             <li><a href="#">Major/Minor</a></li>
+             <li><a href="#">General Education</a></li>
+          </ul>
+       </li>
+       <li><a href="#">Calendar</a></li>
+       <li><a href="#">Academic Report</a></li>
+       <li><a href="#">Resources</a></li>
+    </ul>
+    <form action="#">
+      <input type="search" class="search-data" placeholder="Search" required>
+      <button type="submit" class="fas fa-search"></button>
+   </form>
+ </nav>
+
+
 
   <div id="plannercontainer" class="section">
     <table>
