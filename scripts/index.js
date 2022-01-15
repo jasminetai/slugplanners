@@ -26,9 +26,12 @@ fetchData().then((data) => {
       category.list.forEach(course => {
         const newCourse = document.createElement('li');
 
+        // adding classes menus
         const addMenu = document.createElement('div');
 
+        // quarter menu
         const addQuarter = document.createElement('select');
+
         const defaultQuarter = document.createElement('option');
         defaultQuarter.value = '';
         defaultQuarter.disabled = true;
@@ -47,7 +50,9 @@ fetchData().then((data) => {
         addQuarter.id = 'quarter-select';
         addQuarter.appendChild(defaultQuarter);
 
+        // year menu
         const addYear = document.createElement('select');
+
         const defaultYear = document.createElement('option');
         defaultYear.value = '';
         defaultYear.disabled = true;
@@ -70,6 +75,7 @@ fetchData().then((data) => {
         addMenu.appendChild(addQuarter);
         addMenu.appendChild(addYear);
 
+        // info stuff
         const info = document.createElement('div');
         const infoUrl = document.createElement('a');
         const infoAddButton = document.createElement('button');
@@ -88,6 +94,7 @@ fetchData().then((data) => {
         info.appendChild(addMenu);
         info.appendChild(infoAddButton);
 
+        // add the new course
         newCourse.classList.add('course-option');
         newCourse.info = info;
         newCourse.addEventListener('click', showCourseInfo);
