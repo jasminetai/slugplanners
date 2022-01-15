@@ -41,12 +41,11 @@ body {
 
 /* menu and search chaos*/
 .search{
-  position: absolute;
-  top: 15px;
-  right: 130px;
-  height: 45px;
-  width: 45px;
+  position: relative;
+  /* height: 45px; */
+  /* width: 45px; */
   text-align: center;
+  margin: 0 50px;
 }
 
 .menu-icon{
