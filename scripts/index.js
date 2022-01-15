@@ -37,7 +37,7 @@ fetchData().then((data) => {
         defaultQuarter.disabled = true;
         defaultQuarter.hidden = true;
         defaultQuarter.selected = true;
-        defaultQuarter.id = 'default-quarter';
+        defaultQuarter.classList.add('default-quarter');
         defaultQuarter.appendChild(document.createTextNode('Select quarter'));
 
         for (let i = 0, l = quarters.length; i < l; i++) {
@@ -47,7 +47,7 @@ fetchData().then((data) => {
           addQuarter.appendChild(q);
         }
 
-        addQuarter.id = 'quarter-select';
+        addQuarter.classList.add('quarter-select');
         addQuarter.appendChild(defaultQuarter);
 
         // year menu
@@ -58,7 +58,7 @@ fetchData().then((data) => {
         defaultYear.disabled = true;
         defaultYear.hidden = true;
         defaultYear.selected = true;
-        defaultYear.id = 'default-year';
+        defaultYear.classList.add('default-year');
         defaultYear.appendChild(document.createTextNode('Select year'));
 
         for (let i = 0, l = years.length; i < l; i++) {
@@ -68,7 +68,7 @@ fetchData().then((data) => {
           addYear.appendChild(y);
         }
 
-        addYear.id = 'year-select';
+        addYear.classList.add('year-select');
         addYear.appendChild(defaultYear);
 
         addMenu.classList.add('add-menu');
@@ -151,7 +151,9 @@ fetchData().then((data) => {
   };
 
   const addCourse = event => {
-    pass
+    const button = event.target;
+    //console.log(button.parentNode.getElementById('quarter-select').selected);
+    //console.log(button.parentNode.getElementById('year-select').selectedIndex);
   };
 
   // planner table
