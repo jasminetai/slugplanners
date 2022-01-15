@@ -39,6 +39,7 @@ body {
   background-color: #fff;
 }
 
+
 /* menu and search chaos*/
 .search{
   position: relative;
@@ -77,6 +78,7 @@ body {
 
 .sidebar{
   position: fixed;
+  z-index: 2;
   top: 15px;
   left: 45px;
   width: 250px;
@@ -92,20 +94,17 @@ body {
 
 .sidebar .text{ /* main menu title*/
   color: white;
+  z-index: 3;
   font-size: 28px;
   font-weight: 600;
-  text-shadow: none;
   line-height: 60px;
   text-align: center;
   background: #235996; 
   letter-spacing: 1px;
 }
 
-.sidebar .search-icon{
-  color: #235996; 
-}
-
 nav ul{
+  z-index: 4;
   background: #313335; 
   height: 100%;
   width: 100%;
@@ -124,7 +123,6 @@ nav ul li:last-block{
 nav ul li a{ /* menu section titles*/
   position: relative;
   color: white;
-  text-shadow: none;
   text-decoration: none;
   font-size: 18px;
   padding-left: 30px;
@@ -190,3 +188,36 @@ nav ul li a span{
 nav ul li a span.rotate{
   transform: translateY(-50%) rotate(-180deg);
 }
+
+
+/*search dropdown courses*/
+.course-option{
+  color: white;
+  list-style: none;
+  z-index: -1;
+}
+
+.search-dropdown{
+  background: #235996; 
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  margin: 25px 0;
+}
+
+.search-dropdown li{
+  line-height: 50px;
+  border-bottom: 1px solid #ffffff;
+}
+
+.search-dropdown li:last-block{
+  border-bottom: 1px solid #ffffff;
+}
+
+.search-dropdown li:hover{
+  background: #4276b1; 
+}
+.search-dropdown .course-info{
+  background: #ffffff; 
+}
+
