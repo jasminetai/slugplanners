@@ -12,8 +12,9 @@ fetchData().then((data) => {
   const [catalogMajors, catalogCourses, slugShort, slugLong] = data;
   const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
   const years = ['2020-2021', '2021-2022', '2022-2023', '2023-2024'];
+  let prevCourseInfo;
 
-  // search bar functionality
+  // search bar
   const searchBar = document.getElementsByClassName('search-data')[0];
 
   const createSearchDropdown = () => {
@@ -82,7 +83,7 @@ fetchData().then((data) => {
 
         infoUrl.href = course.url;
         infoUrl.target = '_blank';
-        infoUrl.appendChild(document.createTextNode('Catalog page'));
+        infoUrl.appendChild(document.createTextNode('Catalog'));
 
         infoAddButton.type = 'button';
         infoAddButton.classList.add('course-add-button');
@@ -90,6 +91,7 @@ fetchData().then((data) => {
         infoAddButton.addEventListener('click', addCourse);
 
         info.classList.add('course-info');
+        info.course = course;
         info.appendChild(infoUrl);
         info.appendChild(addMenu);
         info.appendChild(infoAddButton);
@@ -98,7 +100,7 @@ fetchData().then((data) => {
         newCourse.classList.add('course-option');
         newCourse.info = info;
         newCourse.addEventListener('click', showCourseInfo);
-        newCourse.appendChild(document.createTextNode(`${course.code} ${course.name}`));
+        newCourse.appendChild(document.createTextNode(`${course.code}: ${course.name}`));
         newCourse.appendChild(info);
         searchDropdown.appendChild(newCourse);
       });
@@ -108,7 +110,7 @@ fetchData().then((data) => {
   };
 
   const updateSearchDropdown = () => {
-    const input = searchBar.value.toLowerCase();
+    const input = searchBar.value.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
     const options = document.getElementsByClassName('course-option');
     const l = options.length;
 
@@ -124,7 +126,7 @@ fetchData().then((data) => {
 
     while (c < 10 && i < l) {
       option = options[i];
-      if (option.textContent.toLowerCase().includes(input)) {
+      if (option.textContent.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").includes(input)) {
         option.style.display = 'list-item';
         option.getElementsByClassName('course-info')[0].style.display = 'none';
         c++;
@@ -142,18 +144,72 @@ fetchData().then((data) => {
 
   const showCourseInfo = event => {
     const option = event.target;
-    
+
     if (option.info) {
-      option.info.style.display === 'block'
-        ? option.info.style.display = 'none'
-        : option.info.style.display = 'block';
+      if (option.info.style.display === 'block') {
+        option.info.style.display = 'none';
+      } else {
+        option.info.style.display = 'block';
+        if (prevCourseInfo && prevCourseInfo !== option.info) {
+          prevCourseInfo.style.display = 'none';
+        }
+        prevCourseInfo = option.info;
+      }
     }
   };
 
+  // add and remove courses from planner
   const addCourse = event => {
-    const button = event.target;
-    //console.log(button.parentNode.getElementById('quarter-select').selected);
-    //console.log(button.parentNode.getElementById('year-select').selectedIndex);
+    const quarter = event.target.parentElement.querySelector('.quarter-select').options.selectedIndex;
+    const year = event.target.parentElement.querySelector('.year-select').options.selectedIndex;
+    const course = event.target.parentElement.course;
+
+    if ([0, 1, 2, 3].includes(quarter) && [0, 1, 2, 3].includes(year)) {
+      const cell = document.getElementsByClassName('planner')[0].rows[year + 1].cells[quarter + 1];
+      const added = cell.querySelectorAll('li');
+
+      const newCourse = document.createElement('li');
+      const info = document.createElement('div');
+      const url = document.createElement('a');
+      const removeButton = document.createElement('button');
+
+      url.href = course.url;
+      url.target = '_blank';
+      url.appendChild(document.createTextNode('Catalog'));
+
+      removeButton.type = 'button';
+      removeButton.classList.add('course-remove-button');
+      removeButton.addEventListener('click', removeCourse);
+      removeButton.appendChild(document.createTextNode(`Remove`));
+
+      info.classList.add('planner-course-info');
+      info.appendChild(url);
+      info.appendChild(removeButton);
+
+      newCourse.classList.add('planner-course');
+      newCourse.appendChild(document.createTextNode(`${course.code}: ${course.name}`));
+      newCourse.appendChild(info);
+      newCourse.addEventListener('click', showCourseInfo);
+      newCourse.info = info;
+      newCourse.info.style.display = 'none';
+
+      for (let i = 0, l = added.length; i < l; i++) {
+        if (added[i].textContent === newCourse.textContent) {
+          return;
+        }
+      }
+
+      if (!cell.querySelector('ul')) {
+        const plannerCellList = document.createElement('ul');
+        plannerCellList.classList.add('planner-cell-list')
+        cell.appendChild(plannerCellList);
+      }
+      cell.querySelector('.planner-cell-list').appendChild(newCourse);
+    }
+  };
+
+  const removeCourse = event => {
+    event.target.parentElement.parentElement.remove();
   };
 
   // planner table
