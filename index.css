@@ -49,7 +49,7 @@ body {
 
 .menu-icon{
   position: absolute;
-  top: 15px;
+  top: 8px;
   left: 45px;
   height: 45px;
   width: 45px;
@@ -77,7 +77,7 @@ body {
 .sidebar{
   position: fixed;
   z-index: 5;
-  top: 15px;
+  top: 0;
   left: 45px;
   width: 250px;
   height: 100%;
@@ -311,7 +311,7 @@ header .slider{
 }
 
 .quarter .quarter-courses{
-  margin: 15px 0;
+  margin: 15px 0 0;
   text-align: center;
   padding-bottom: 15px;
   border-bottom: 1px solid #e6e6e6;
@@ -324,6 +324,7 @@ header .slider{
 
 .fall{
   border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
 }
 
 .fall-name {
@@ -344,6 +345,7 @@ header .slider{
 
 .winter{
   border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
 }
 
 .winter-name {
@@ -364,6 +366,7 @@ header .slider{
 
 .spring{
   border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
 }
 
 .spring-name {
@@ -384,6 +387,7 @@ header .slider{
 
 .summer{
   border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
 }
 
 .summer-name {
