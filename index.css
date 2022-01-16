@@ -10,10 +10,14 @@
 }
 
 body {
-  background-color: #cce7ff; 
-  color: #000;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(#eab6ff 0%, #90ccfd 100%);
+
+  /*color: #000;
   font: 16px/1.5 verdana, arial;
-  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;*/
 }
 
 #banner {
@@ -78,7 +82,7 @@ body {
 
 .sidebar{
   position: fixed;
-  z-index: 2;
+  z-index: 5;
   top: 15px;
   left: 45px;
   width: 250px;
@@ -207,6 +211,7 @@ nav ul li a span.rotate{
 .search-dropdown li{
   line-height: 50px;
   border-bottom: 1px solid #ffffff;
+  cursor: pointer;
 }
 
 .search-dropdown li:last-block{
@@ -218,5 +223,105 @@ nav ul li a span.rotate{
 }
 .search-dropdown .course-info{
   background: #ffffff; 
+  background: #90ccfd; 
 }
+
+.planner-cell-list{
+  list-style: none;
+}
+
+
+/*planner stuff*/
+.plan{
+  /*display: flex;*/
+  align-items: center;
+  justify-content: center;
+  /*min-height: 40vh;*/
+  margin: 0px 35%;
+  width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+}
+
+.plan header{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  position: relative;
+  /*top: -100px;*/
+}
+
+header label{
+  height: 100%;
+  z-index: 2;
+  width: 20%;
+  display: flex;
+  cursor: pointer;
+  font-size: 17px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+#tab-1:checked ~ header .tab-1,
+#tab-2:checked ~ header .tab-2,
+#tab-3:checked ~ header .tab-3,
+#tab-4:checked ~ header .tab-4{
+  color: #fff;
+
+}
+
+/*header label:nth-child(3){
+  width: 40%;
+}*/
+
+header .slider{
+  position: absolute;
+  height: 87%;
+  border-radius: inherit;
+  background: linear-gradient(145deg, #eab6ff 0%, #90ccfd 100%);
+  transition: all 0.4s ease;
+}
+
+#tab-1:checked ~ header .slider{
+  left: 0%;
+  width: 95px;
+  transform: translateX(5%);
+}
+
+#tab-2:checked ~ header .slider{
+  left: 36%;
+  width: 93px;
+  transform: translateX(-50%);
+}
+
+#tab-3:checked ~ header .slider{
+  left: 71%;
+  width: 90px;
+  transform: translateX(-105%);
+}
+
+#tab-4:checked ~ header .slider{
+  left: 110%;
+  width: 100px;
+  transform: translateX(-150%);
+}
+
+.plan input[type="radio"]{
+  display: none;
+}
+
+.quarter .quarter-courses{
+  margin: 20px 0;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
 
