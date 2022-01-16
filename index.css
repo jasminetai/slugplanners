@@ -38,12 +38,6 @@ body {
   margin: 32px 24px;
 }
 
-#plannercontainer {
-  padding: 24px 32px;
-  background-color: #fff;
-}
-
-
 /* menu and search chaos*/
 .search{
   position: relative;
@@ -222,14 +216,15 @@ nav ul li a span.rotate{
   background: #bebfc0; 
 }
 .search-dropdown .course-info{
-  background: #ffffff; 
-  background: #90ccfd; 
+  background: #90ccfd;
+  line-height: 40px;
+  padding: 10px 0;
+  cursor: default;
 }
 
 .planner-cell-list{
   list-style: none;
 }
-
 
 /*planner stuff*/
 .plan{
@@ -396,4 +391,18 @@ header .slider{
 
 #about {
   text-align: center;
+}
+
+.add-menu {
+  margin: 0;
+}
+
+.add-menu select {
+  width: 120px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
 }
