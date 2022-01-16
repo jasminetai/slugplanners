@@ -393,3 +393,7 @@ header .slider{
   display: table;
   clear: both;
 }
+
+#about {
+  text-align: center;
+}
