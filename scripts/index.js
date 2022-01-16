@@ -1,15 +1,17 @@
 const fetchData = async () => {
-  const [catalogMajors, catalogCourses, slugShort, slugLong] = await Promise.all([
-    fetch("scripts/catalogmajors.json").then(response => response.json()).catch(e => console.log(e)),
+  const [catalogCourses] = await Promise.all([
+    //fetch("scripts/catalogmajors.json").then(response => response.json()).catch(e => console.log(e)),
+    //fetch("scripts/catalogminors.json").then(response => response.json()).catch(e => console.log(e)),
     fetch("scripts/catalogcourses.json").then(response => response.json()).catch(e => console.log(e)),
-    fetch("scripts/slugshort.json").then(response => response.json()).catch(e => console.log(e)),
-    fetch("scripts/sluglong.json").then(response => response.json()).catch(e => console.log(e))
+    //fetch("scripts/slugshort.json").then(response => response.json()).catch(e => console.log(e)),
+    //fetch("scripts/sluglong.json").then(response => response.json()).catch(e => console.log(e))
   ]).catch(e => console.log(e));
-  return [catalogMajors, catalogCourses, slugShort, slugLong];
+  return catalogCourses;
 };
 
 fetchData().then((data) => {
-  const [catalogMajors, catalogCourses, slugShort, slugLong] = data;
+  //const [catalogMajors, catalogCourses, slugShort, slugLong] = data;
+  const catalogCourses = data;
   const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
   const years = ['2021-2022', '2022-2023', '2023-2024', '2024-2025'];
   let notifTimeout;
@@ -23,7 +25,7 @@ fetchData().then((data) => {
     const courseCodes = [];
     let courseList = [];
 
-    searchDropdown.className = 'search-dropdown';
+    searchDropdown.classList.add('search-dropdown');
     document.getElementsByTagName('form')[0].insertBefore(searchDropdown, document.getElementsByClassName('search-data')[0].nextSibling);
 
     catalogCourses.forEach(category => {

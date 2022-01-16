@@ -72,6 +72,16 @@ getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Academic-Progra
   })
   .catch(e => console.log(e));
 
+getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Academic-Programs/Undergraduate-Minors')
+  .then(data => {
+    fs.writeFile('scripts/catalogminors.json', JSON.stringify(data), function (e) {
+      if (e) {
+        console.log(e);
+      }
+    });
+  })
+  .catch(e => console.log(e));
+
 getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Courses')
   .then(data => {
     return Promise.all(data.map(category =>

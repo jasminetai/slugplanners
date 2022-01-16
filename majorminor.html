@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SlugPlanners</title>
+  <link rel="stylesheet" href="index.css" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+
+<body>
+
+  <div id="banner">
+    <h1 id="banner__header">SlugPlanners</h1>
+    <p id="banner__description">for all your quarter-by-quarter planning needs</p>
+  </div>
+
+  <div class="menu-icon">
+    <span class="fas fa-bars"></span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="text">
+       Main Menu
+    </div>
+    <ul>
+      <li><a href="index.html">Current Schedule</a></li>
+      <li>
+         <a href="#" class="class-btn">Class List
+         <span class="fas fa-caret-down first"></span>
+         </a>
+         <ul class="class-show">
+            <li class="active"><a href="majorminor.html">Major/Minor</a></li>
+            <li><a href="generaleducation.html">General Education</a></li>
+         </ul>
+      </li>
+      <!--
+      <li><a href="#">Calendar</a></li>
+      <li><a href="#">Academic Report</a></li>
+      <li>
+        <a href="#" class="res-btn">Resources
+        <span class="fas fa-caret-down second"></span>
+        </a>
+        <ul class="res-show">
+           <li><a href="#">idk</a></li>
+           <li><a href="#">idk</a></li>
+        </ul>
+      </li>
+      -->
+   </ul>
+  </nav> 
+  
+
+  <div class="search">
+    <h2>Major/Minor Search</h2>
+    <br />
+    <form action="#">
+      <input type="search" class="search-data" placeholder="Search" required>
+    </form>
+    <p>Data taken from the <a href="https://catalog.ucsc.edu/en/Current/General-Catalog" target="_blank">UCSC Catalog</a></p>
+    <br />
+  </div>
+
+  <script>
+  $('.menu-icon').click(function(){
+    $(this).toggleClass("click");
+    $('.sidebar').toggleClass("show");
+  });
+    $('.class-btn').click(function(){
+      $('nav ul .class-show').toggleClass("show");
+      $('nav ul .first').toggleClass("rotate");
+    });
+    $('.res-btn').click(function(){
+      $('nav ul .res-show').toggleClass("show2");
+      $('nav ul .second').toggleClass("rotate");
+    });
+    $('nav ul li').click(function(){
+      $(this).addClass("active").siblings().removeClass("active");
+    });
+  </script>
+
+  <script src="scripts/majorminor.js"></script>
+</body>
+
+</html>
