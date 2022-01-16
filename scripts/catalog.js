@@ -64,7 +64,7 @@ const getCatalogClass = () => {
 
 getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Academic-Programs/Bachelors-Degrees')
   .then(data => {
-    fs.writeFile('catalogmajors.json', JSON.stringify(data), function (e) {
+    fs.writeFile('scripts/catalogmajors.json', JSON.stringify(data), function (e) {
       if (e) {
         console.log(e);
       }
@@ -83,7 +83,7 @@ getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Courses')
     ));
   })
   .then(data => {
-    fs.writeFile('catalogcourses.json', JSON.stringify(data), function (e) {
+    fs.writeFile('scripts/catalogcourses.json', JSON.stringify(data), function (e) {
       if (e) {
         console.log(e);
       }
