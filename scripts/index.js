@@ -138,7 +138,7 @@ fetchData().then((data) => {
 
     while (c < 10 && i < l) {
       option = options[i];
-      if (option.textContent.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").includes(input)) {
+      if (option.childNodes[0].textContent.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").includes(input)) {
         option.style.display = 'list-item';
         option.getElementsByClassName('course-info')[0].style.display = 'none';
         c++;
@@ -228,10 +228,10 @@ fetchData().then((data) => {
     }
     const notif = document.createElement('div');
     notif.id = 'notif';
-    notif.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #313335; color: white; padding: 10px;';
+    notif.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #313335; color: white; padding: 10px 20px;';
     notif.appendChild(document.createTextNode(message));
     document.body.appendChild(notif);
-    notifTimeout = setTimeout(() => notif.remove(), 5000);
+    notifTimeout = setTimeout(() => notif.remove(), 8000);
     return;
   };
 
@@ -241,12 +241,10 @@ fetchData().then((data) => {
   };
 
   // planner table
-  const plannerContainer = document.getElementById('plannercontainer');
-
   const createPlanner = () => {
     const planner = document.createElement('table');
 
-    planner.className = 'planner';
+    planner.classList.add('planner');
     document.getElementById('plannercontainer').appendChild(planner);
 
     const head = document.createElement('thead');
@@ -282,6 +280,11 @@ fetchData().then((data) => {
       planner.appendChild(row);
     });
   };
+
+  /*
+  const updatePlanner = () => {
+    document.querySelectorAll()
+  };*/
 
   // set it all up
   createSearchDropdown();

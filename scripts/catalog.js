@@ -43,21 +43,12 @@ const getCoursesFromCategory = url => {
     .catch(e => console.log(e));
 };
 
-const getCatalogClass = () => {
-  axios
-    .get('https://catalog.ucsc.edu/Current/General-Catalog/Courses/CSE-Computer-Science-and-Engineering/Upper-Division/CSE-183')
+const getCatalogCourse = url => {
+  return axios
+    .get(url)
     .then(response => {
       const $ = cheerio.load(response.data);
-
-      console.log($('#main h1 :not(.subjectname)').text());
-
-      console.log($('#main h1').contents().filter(function () {
-        return this.type === 'text';
-      }).text().trim());
-
-      console.log($('#main .desc').text().trim());
-
-      console.log($('#main .extraFields').text().trim());
+      return $('.desc').text().trim();
     })
     .catch(e => console.log(e));
 };
