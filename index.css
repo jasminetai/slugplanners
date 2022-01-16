@@ -425,3 +425,11 @@ button {
   cursor: pointer;
   padding: 0 4px;
 }
+
+.planner-course {
+  cursor: pointer;
+}
+
+.course-remove-button {
+  margin: 0 10px;
+}
