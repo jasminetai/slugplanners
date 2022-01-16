@@ -165,7 +165,8 @@ nav ul ul li a{ /* section sub categories*/
 }
 
 nav ul li.active ul li a{
-  color: #8bff9a;
+  /*color: #8bff9a;*/
+  color: #ffffff;
   background: #575ea5; 
   border-left-color: transparent;
 }
