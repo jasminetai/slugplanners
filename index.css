@@ -38,12 +38,6 @@ body {
   margin: 32px 24px;
 }
 
-#plannercontainer {
-  padding: 24px 32px;
-  background-color: #fff;
-}
-
-
 /* menu and search chaos*/
 .search{
   position: relative;
@@ -230,7 +224,6 @@ nav ul li a span.rotate{
   list-style: none;
 }
 
-
 /*planner stuff*/
 .plan{
   /*display: flex;*/
@@ -411,4 +404,18 @@ header .slider{
 
 #about {
   text-align: center;
+}
+
+.add-menu {
+  margin: 0;
+}
+
+.add-menu select {
+  width: 120px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
 }
