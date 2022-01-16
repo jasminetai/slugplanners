@@ -14,7 +14,12 @@ fetchData().then((data) => {
   const catalogCourses = data;
   const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
   const years = ['2021-2022', '2022-2023', '2023-2024', '2024-2025'];
-  const plannerList = [[],[],[],[]];
+  const plannerList = [
+    [[],[],[],[]],
+    [[],[],[],[]],
+    [[],[],[],[]],
+    [[],[],[],[]]
+  ];
   let selectedPlannerList = 0;
   let notifTimeout;
   let prevCourseInfo;
@@ -179,8 +184,7 @@ fetchData().then((data) => {
     const course = event.target.parentElement.course;
 
     if ([0, 1, 2, 3].includes(quarter) && [0, 1, 2, 3].includes(year)) {
-      const cell = document.getElementsByClassName('planner')[0].rows[year + 1].cells[quarter + 1];
-      const added = cell.querySelectorAll('li');
+      const cell = plannerList[year][quarter];
 
       const newCourse = document.createElement('li');
       const info = document.createElement('div');
@@ -193,7 +197,11 @@ fetchData().then((data) => {
 
       removeButton.type = 'button';
       removeButton.classList.add('course-remove-button');
-      removeButton.addEventListener('click', removeCourse);
+      removeButton.addEventListener('click', () => {
+        cell.splice(cell.indexOf(newCourse), 1);
+        updatePlanner();
+        return addNotif(`${course.code}: ${course.name} removed.`);
+      });
       removeButton.appendChild(document.createTextNode(`Remove`));
 
       info.classList.add('planner-course-info');
@@ -207,18 +215,14 @@ fetchData().then((data) => {
       newCourse.info = info;
       newCourse.info.style.display = 'none';
 
-      for (let i = 0, l = added.length; i < l; i++) {
-        if (added[i].textContent === newCourse.textContent) {
+      for (let i = 0, l = cell.length; i < l; i++) {
+        if (cell[i].textContent === newCourse.textContent) {
           return addNotif(`${course.code}: ${course.name} is already added!`);
         }
       }
 
-      if (!cell.querySelector('ul')) {
-        const plannerCellList = document.createElement('ul');
-        plannerCellList.classList.add('planner-cell-list')
-        cell.appendChild(plannerCellList);
-      }
-      cell.querySelector('.planner-cell-list').appendChild(newCourse);
+      cell.push(newCourse);
+      updatePlanner();
       return addNotif(`${course.code}: ${course.name} added!`);
     }
   };
@@ -237,21 +241,28 @@ fetchData().then((data) => {
     return;
   };
 
-  const removeCourse = event => {
-    event.target.parentElement.parentElement.remove();
-    return addNotif(`${event.target.parentElement.parentElement.childNodes[0].textContent} removed.`);
-  };
-
   const updatePlanner = () => {
     const years = document.querySelectorAll('.plan input');
+    const quarterSections = document.querySelectorAll('.section-courses');
     for (let i = 0, l = years.length; i < l; i++) {
-      if (years[i].value === on) {
-
+      if (years[i].checked) {
+        selectedPlannerList = i;
+        for (let j = 0, ll = plannerList[i].length; j < ll; j++) {
+          quarterSections[j].innerHTML = '';
+          for (k of plannerList[i][j]) {
+            quarterSections[j].appendChild(k);
+          }
+        }
+        return;
       }
     }
   };
 
   // set it all up
   createSearchDropdown();
+  const inputs = document.querySelectorAll('.plan input');
+  for (let i = 0, l = inputs.length; i < l; i++) {
+    inputs[i].addEventListener('click', updatePlanner);
+  }
   searchBar.addEventListener('keyup', updateSearchDropdown);
 });
