@@ -34,14 +34,14 @@ body {
   margin: 6px 0;
 }
 
-.section {
+/*.section {
   margin: 32px 24px;
 }
 
 #plannercontainer {
   padding: 24px 32px;
   background-color: #fff;
-}
+}*/
 
 
 /* menu and search chaos*/
@@ -60,7 +60,7 @@ body {
   height: 45px;
   width: 45px;
   text-align: center;
-  background: #235996; 
+  background: #6cbdff; 
   border-radius: 3px;
   cursor: pointer;
   transition: left 0.4s ease;
@@ -88,7 +88,7 @@ body {
   width: 250px;
   height: 100%;
   left: -250px;
-  background: #313335; 
+  background: #90959b; 
   transition: left 0.4s ease;
 }
 
@@ -103,13 +103,13 @@ body {
   font-weight: 600;
   line-height: 60px;
   text-align: center;
-  background: #235996; 
+  background: #6cbdff; 
   letter-spacing: 1px;
 }
 
 nav ul{
   /*z-index: 4;*/
-  background: #313335; 
+  background: #90959b; 
   height: 100%;
   width: 100%;
   list-style: none;
@@ -117,11 +117,11 @@ nav ul{
 
 nav ul li{ /* menu blocks */
   line-height: 60px;
-  border-bottom: 1px solid #5b5d5f;
+  border-bottom: 1px solid #ffffff;
 }
 
 nav ul li:last-block{
-  border-bottom: 1px solid #5b5d5f;
+  border-bottom: 1px solid #ffffff;
 }
 
 nav ul li a{ /* menu section titles*/
@@ -138,12 +138,12 @@ nav ul li a{ /* menu section titles*/
 
 nav ul li.active a{
   color: #8bff9a;
-  background: #646668;
+  background: #bebfc0; 
   border-left-color: #8bff9a;
 }
 
 nav ul li a:hover{
-  background: #646668;
+  background: #bebfc0; 
 }
 
 nav ul ul{
@@ -172,13 +172,13 @@ nav ul ul li a{ /* section sub categories*/
 
 nav ul li.active ul li a{
   color: #8bff9a;
-  background: #313335;
+  background: #90959b;
   border-left-color: transparent;
 }
 
 nav ul ul li a:hover{
   color: #adffb8! important;
-  background: #646668! important;
+  background: #bebfc0! important;
 }
 
 nav ul li a span{
@@ -201,7 +201,7 @@ nav ul li a span.rotate{
 }
 
 .search-dropdown{
-  background: #235996; 
+  background: #6cbdff; 
   height: 100%;
   width: 100%;
   list-style: none;
@@ -219,7 +219,7 @@ nav ul li a span.rotate{
 }
 
 .search-dropdown li:hover{
-  background: #4276b1; 
+  background: #bebfc0; 
 }
 .search-dropdown .course-info{
   background: #ffffff; 
