@@ -34,14 +34,14 @@ body {
   margin: 6px 0;
 }
 
-/*.section {
+.section {
   margin: 32px 24px;
 }
 
 #plannercontainer {
   padding: 24px 32px;
   background-color: #fff;
-}*/
+}
 
 
 /* menu and search chaos*/
@@ -330,3 +330,66 @@ header .slider{
   border-bottom: 1px solid #e6e6e6;
 }
 
+.fall-name {
+  float: left;
+  width: 12%;
+}
+
+.fall-courses {
+  float: left;
+  width: 88%;
+}
+
+.fall:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.winter-name {
+  float: left;
+  width: 12%;
+}
+
+.winter-courses {
+  float: left;
+  width: 88%;
+}
+
+.winter:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.spring-name {
+  float: left;
+  width: 12%;
+}
+
+.spring-courses {
+  float: left;
+  width: 88%;
+}
+
+.spring:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.summer-name {
+  float: left;
+  width: 12%;
+}
+
+.summer-courses {
+  float: left;
+  width: 88%;
+}
+
+.summer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
