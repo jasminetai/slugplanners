@@ -14,6 +14,8 @@ fetchData().then((data) => {
   const catalogCourses = data;
   const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
   const years = ['2021-2022', '2022-2023', '2023-2024', '2024-2025'];
+  const plannerList = [[],[],[],[]];
+  let selectedPlannerList = 0;
   let notifTimeout;
   let prevCourseInfo;
 
@@ -240,54 +242,16 @@ fetchData().then((data) => {
     return addNotif(`${event.target.parentElement.parentElement.childNodes[0].textContent} removed.`);
   };
 
-  // planner table
-  const createPlanner = () => {
-    const planner = document.createElement('table');
-
-    planner.classList.add('planner');
-    document.getElementById('plannercontainer').appendChild(planner);
-
-    const head = document.createElement('thead');
-    const headRow = document.createElement('tr');
-    headRow.appendChild(document.createElement('td'));
-
-    quarters.forEach(c => {
-      const colHead = document.createElement('th');
-      colHead.classList.add('planner-col-head');
-      colHead.scope = 'col';
-      colHead.appendChild(document.createTextNode(c));
-      headRow.appendChild(colHead);
-    });
-
-    head.classList.add('head-row');
-    head.appendChild(headRow);
-    planner.appendChild(head);
-
-    years.forEach(r => {
-      const row = document.createElement('tr');
-      const rowHead = document.createElement('th');
-
-      rowHead.classList.add('planner-row-head');
-      rowHead.scope = 'row';
-      rowHead.appendChild(document.createTextNode(r));
-      row.appendChild(rowHead);
-
-      for (let i = 0, l = quarters.length; i < l; i++) {
-        const cell = document.createElement('td');
-        cell.classList.add('planner-cell');
-        row.appendChild(cell);
-      }
-      planner.appendChild(row);
-    });
-  };
-
-  /*
   const updatePlanner = () => {
-    document.querySelectorAll()
-  };*/
+    const years = document.querySelectorAll('.plan input');
+    for (let i = 0, l = years.length; i < l; i++) {
+      if (years[i].value === on) {
+
+      }
+    }
+  };
 
   // set it all up
   createSearchDropdown();
   searchBar.addEventListener('keyup', updateSearchDropdown);
-  createPlanner();
 });
