@@ -77,7 +77,7 @@ body {
 .sidebar{
   position: fixed;
   z-index: 5;
-  top: 15px;
+  top: 0px;
   left: 45px;
   width: 250px;
   height: 100%;
@@ -165,7 +165,8 @@ nav ul ul li a{ /* section sub categories*/
 }
 
 nav ul li.active ul li a{
-  color: #8bff9a;
+  /*color: #8bff9a;*/
+  color: #ffffff;
   background: #575ea5; 
   border-left-color: transparent;
 }
