@@ -234,11 +234,11 @@ nav ul li a span.rotate{
 /*planner stuff*/
 .plan{
   /*display: flex;*/
-  align-items: center;
-  justify-content: center;
+  /*align-items: center;
+  justify-content: center;*/
   /*min-height: 40vh;*/
-  margin: 0px 35%;
-  width: 400px;
+  margin: 0px 18%;
+  width: 800px;
   background: #fff;
   border-radius: 10px;
   padding: 30px;
@@ -290,26 +290,26 @@ header .slider{
 }
 
 #tab-1:checked ~ header .slider{
-  left: 0%;
-  width: 95px;
+  left: 10%;
+  width: 130px;
   transform: translateX(5%);
 }
 
 #tab-2:checked ~ header .slider{
-  left: 36%;
-  width: 93px;
+  left: 40%;
+  width: 130px;
   transform: translateX(-50%);
 }
 
 #tab-3:checked ~ header .slider{
-  left: 71%;
-  width: 90px;
+  left: 70%;
+  width: 130px;
   transform: translateX(-105%);
 }
 
 #tab-4:checked ~ header .slider{
-  left: 110%;
-  width: 100px;
+  left: 98%;
+  width: 130px;
   transform: translateX(-150%);
 }
 
@@ -318,10 +318,15 @@ header .slider{
 }
 
 .quarter .quarter-courses{
-  margin: 20px 0;
+  margin: 15px 0;
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #e6e6e6;
 }
 
+.quart-list p{
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #e6e6e6;
+}
 
