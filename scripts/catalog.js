@@ -53,10 +53,10 @@ module.exports.getCourse = async url => {
     crosslistedReqs: $('.xlistReq p').text()
   };
 
-  for (const c in course) {
-    course[c].length
-      ? course[c] = course[c].trim()
-      : delete course[c];
+  for (const key in course) {
+    course[key].length
+      ? course[key] = course[key].trim()
+      : delete course[key];
   }
 
   return course;

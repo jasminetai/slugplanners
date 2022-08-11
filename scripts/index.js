@@ -1,12 +1,16 @@
+// todo: custom choices of quarter/years. hardcoded for now
 const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
 const years = ['2021-2022', '2022-2023', '2023-2024', '2024-2025'];
 
-const plannerList = [
-  [[],[],[],[]],
-  [[],[],[],[]],
-  [[],[],[],[]],
-  [[],[],[],[]]
-];
+// plannerList is where we will keep info on selected courses
+const plannerList = [];
+for (let i = 0, l = years.length; i < l; i++) {
+  plannerList.push([]);
+  for (const j of quarters) {
+    plannerList[i].push([]);
+  }
+}
+
 let selectedPlannerList = 0;
 let notifTimeout;
 let prevCourseOption;
@@ -30,10 +34,29 @@ const createSelect = (type, options) => {
   initOption.hidden = true;
   initOption.selected = true;
   initOption.appendChild(document.createTextNode(`Select ${type}`));
-
   selectMenu.appendChild(initOption);
 
   return selectMenu;
+};
+
+const createAddMenu = () => {
+  const addMenu = document.createElement('div');
+  addMenu.classList.add('add-menu');
+  
+  const quarterSelect = createSelect('quarter', quarters);
+  const yearSelect = createSelect('year', years);
+
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  addButton.classList.add('course-add-button');
+  addButton.appendChild(document.createTextNode('Add!'));
+  addButton.addEventListener('click', addCourse);
+  
+  addMenu.appendChild(quarterSelect);
+  addMenu.appendChild(yearSelect);
+  addMenu.appendChild(addButton);
+
+  return addMenu;
 };
 
 const createInfoContainer = course => {
@@ -48,24 +71,28 @@ const createInfoContainer = course => {
   desc.classList.add('course-desc');
   desc.appendChild(document.createTextNode(course.desc));
 
-  const addMenu = document.createElement('div');
-  addMenu.classList.add('add-menu');
-  const quarterSelect = createSelect('quarter', quarters);
-  const yearSelect = createSelect('year', years);
-  addMenu.appendChild(quarterSelect);
-  addMenu.appendChild(yearSelect);
-
-  const addButton = document.createElement('button');
-  addButton.type = 'button';
-  addButton.classList.add('course-add-button');
-  addButton.appendChild(document.createTextNode('Add!'));
-  addButton.addEventListener('click', addCourse);
-
   container.classList.add('course-info');
   container.appendChild(url);
   container.appendChild(desc);
-  container.appendChild(addMenu);
-  container.appendChild(addButton);
+
+  const keyNames = {
+    credits: 'Credits',
+    reqs: 'Requirements',
+    quarters: 'Quarters offered',
+    ge: 'General Education',
+    instructor: 'Instructors',
+    repeatCredit: 'Repeatable for credit',
+    crosslisted: 'Crosslisted as',
+    crosslistedReqs: 'Crosslisted requirements'
+  };
+
+  for (const key in course) {
+    if (!Object.keys(keyNames).includes(key)) continue;
+    const field = document.createElement('div');
+    field.classList.add('course-field');
+    field.appendChild(document.createTextNode(keyNames[key] + ': ' + course[key]));
+    container.appendChild(field);
+  }
 
   return container;
 };
@@ -92,6 +119,7 @@ const createSearchDropdown = courses => {
     newCourse.appendChild(document.createTextNode(`${course.code}: ${course.name}`));
 
     const infoContainer = createInfoContainer(course);
+    infoContainer.appendChild(createAddMenu());
     newCourse.appendChild(infoContainer);
 
     searchDropdown.appendChild(newCourse);
@@ -102,27 +130,23 @@ const createSearchDropdown = courses => {
 
 const updateSearchDropdown = () => {
   const input = searchBar.value.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-  const options = document.getElementsByClassName('course-option');
-  const l = options.length;
 
-  const activeOptions = document.getElementsByClassName('course-option--active');
-  for (let i = activeOptions.length; i > 0; i--) {
-    activeOptions[i - 1].classList.remove('course-option--active');
+  const oldMatches = document.getElementsByClassName('course-option--match');
+  for (let i = oldMatches.length - 1; i >= 0; i--) {
+    oldMatches[i].classList.remove('course-option--match');
   }
 
   if (input.length < 3) return;
 
+  const options = document.getElementsByClassName('course-option');
   let numShown = 0;
-  let i = 0;
 
-  while (numShown < 10 && i < l) {
-    const option = options[i];
+  for (const option of options) {
     if (option.childNodes[0].textContent.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').includes(input)) {
-      option.classList.add('course-option--active');
+      option.classList.add('course-option--match');
       option.getElementsByClassName('course-info')[0].style.display = 'none';
-      numShown++;
+      if (++numShown === 10) break;
     }
-    i++;
   }
 };
 
@@ -142,73 +166,67 @@ const showCourseInfo = event => {
   }
 };
 
-// add and remove courses from planner
 const addCourse = event => {
   const quarter = event.target.parentElement.querySelector('.quarter-select').options.selectedIndex;
   const year = event.target.parentElement.querySelector('.year-select').options.selectedIndex;
-  const course = event.target.parentElement.parentElement.course;
+  const course = event.target.closest('.course-option').course;
 
-  if ([0, 1, 2, 3].includes(quarter) && [0, 1, 2, 3].includes(year)) {
-    const cell = plannerList[year][quarter];
+  if (![0, 1, 2, 3].includes(quarter)) return addNotif('Select a valid quarter!', '#bb0000');
+  if (![0, 1, 2, 3].includes(year)) return addNotif('Select a valid year!', '#bb0000');
 
-    const newCourse = document.createElement('li');
-    const info = document.createElement('div');
-    const url = document.createElement('a');
-    const removeButton = document.createElement('button');
+  const cell = plannerList[year][quarter];
 
-    url.href = course.url;
-    url.target = '_blank';
-    url.appendChild(document.createTextNode('Catalog'));
+  const newCourse = document.createElement('li');
+  const infoContainer = createInfoContainer(course);
 
-    removeButton.type = 'button';
-    removeButton.classList.add('course-remove-button');
-    removeButton.addEventListener('click', () => {
-      cell.splice(cell.indexOf(newCourse), 1);
-      updatePlanner();
-      return addNotif(`${course.code}: ${course.name} removed.`);
-    });
-    removeButton.appendChild(document.createTextNode(`Remove`));
-
-    info.classList.add('planner-course-info');
-    info.appendChild(url);
-    info.appendChild(removeButton);
-
-    newCourse.classList.add('planner-course');
-    newCourse.appendChild(document.createTextNode(`${course.code}: ${course.name}`));
-    newCourse.appendChild(info);
-    newCourse.addEventListener('click', showCourseInfo);
-    newCourse.info = info;
-    newCourse.info.style.display = 'none';
-
-    for (let i = 0, l = cell.length; i < l; i++) {
-      if (cell[i].textContent === newCourse.textContent) {
-        return addNotif(`${course.code}: ${course.name} is already added!`);
-      }
-    }
-
-    cell.push(newCourse);
+  const removeButton = document.createElement('button');
+  removeButton.type = 'button';
+  removeButton.classList.add('course-remove-button');
+  removeButton.addEventListener('click', () => {
+    cell.splice(cell.indexOf(newCourse), 1);
     updatePlanner();
-    return addNotif(`${course.code}: ${course.name} added!`);
+    return addNotif(`${course.code}: ${course.name} removed.`, '#00bb00');
+  });
+  removeButton.appendChild(document.createTextNode(`Remove`));
+
+  infoContainer.style.display = 'none';
+  infoContainer.appendChild(removeButton);
+
+  newCourse.classList.add('planner-course');
+  newCourse.appendChild(document.createTextNode(`${course.code}: ${course.name}`));
+  newCourse.appendChild(infoContainer);
+  newCourse.addEventListener('click', showCourseInfo);
+
+  for (const prevAddedCourse of cell) {
+    if (prevAddedCourse.textContent === newCourse.textContent) {
+      return addNotif(`${course.code}: ${course.name} is already added!`, '#888');
+    }
   }
+
+  cell.push(newCourse);
+  updatePlanner();
+  return addNotif(`${course.code}: ${course.name} added!`, '#00bb00');
 };
 
-const addNotif = message => {
-  if (document.querySelector('#notif')) {
-    document.body.removeChild(document.querySelector('#notif'));
+const addNotif = (message, color) => {
+  if (document.querySelector('.notif')) {
+    document.body.removeChild(document.querySelector('.notif'));
     clearTimeout(notifTimeout);
   }
+
   const notif = document.createElement('div');
-  notif.id = 'notif';
-  notif.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #313335; color: white; padding: 10px 20px;';
+  notif.classList.add('notif');
+  notif.style.backgroundColor = color;
   notif.appendChild(document.createTextNode(message));
+
   document.body.appendChild(notif);
   notifTimeout = setTimeout(() => notif.remove(), 8000);
-  return;
 };
 
 const updatePlanner = () => {
   const years = document.querySelectorAll('.plan input');
-  const quarterSections = document.querySelectorAll('.section-courses');
+  const quarterSections = document.querySelectorAll('.quarter-courses');
+
   for (let i = 0, l = years.length; i < l; i++) {
     if (years[i].checked) {
       selectedPlannerList = i;
@@ -223,14 +241,38 @@ const updatePlanner = () => {
   }
 };
 
-// set it all up
 (async () => {
-  const courses = await fetch("data/courses.json");
-  createSearchDropdown(await courses.json());
+  const courses = await fetch("data/courses.json").then(d => d.json());
+  createSearchDropdown(courses);
 })();
 
 const inputs = document.querySelectorAll('.plan input');
 for (let i = 0, l = inputs.length; i < l; i++) {
   inputs[i].addEventListener('click', updatePlanner);
 }
+
 searchBar.addEventListener('keyup', updateSearchDropdown);
+
+Element.prototype.toggleClass = function(className) {
+  this.classList.contains(className)
+    ? this.classList.remove(className)
+    : this.classList.add(className)
+  return this;
+};
+
+document.querySelector('.menu-icon').onclick = function() {
+  this.toggleClass('click');
+  document.querySelector('.sidebar').toggleClass('show');
+}
+document.querySelector('.class-btn').onclick = function() {
+  document.querySelector('nav ul .class-show').toggleClass('show');
+  document.querySelector('nav ul .first').toggleClass('rotate');
+}
+document.querySelector('.res-btn').onclick = function() {
+  document.querySelector('nav ul .res-show').toggleClass('show2');
+  document.querySelector('nav ul .first').toggleClass('rotate');
+}
+document.querySelector('nav ul li').onclick = function() {
+  document.querySelectorAll('nav ul li').forEach(element => element.classList.remove('active'))
+  this.classList.add('active');
+}

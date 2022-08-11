@@ -5,13 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SlugPlanners</title>
-  <link rel="stylesheet" href="index.css" type="text/css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <link rel="stylesheet" href="css/index.css" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="manifest" href="assets/site.webmanifest">
 </head>
 
 <body>
@@ -37,10 +36,9 @@
          </a>
          <ul class="class-show">
             <li class="active"><a href="majorminor.html">Major/Minor</a></li>
-            <li><a href="generaleducation.html">General Education</a></li>
+            <li><a href="gened.html">General Education</a></li>
          </ul>
       </li>
-      <!--
       <li><a href="#">Calendar</a></li>
       <li><a href="#">Academic Report</a></li>
       <li>
@@ -52,7 +50,6 @@
            <li><a href="#">idk</a></li>
         </ul>
       </li>
-      -->
    </ul>
   </nav> 
   
@@ -66,24 +63,6 @@
     <p>Data taken from the <a href="https://catalog.ucsc.edu/en/Current/General-Catalog" target="_blank">UCSC Catalog</a></p>
     <br />
   </div>
-
-  <script>
-  $('.menu-icon').click(function(){
-    $(this).toggleClass("click");
-    $('.sidebar').toggleClass("show");
-  });
-    $('.class-btn').click(function(){
-      $('nav ul .class-show').toggleClass("show");
-      $('nav ul .first').toggleClass("rotate");
-    });
-    $('.res-btn').click(function(){
-      $('nav ul .res-show').toggleClass("show2");
-      $('nav ul .second').toggleClass("rotate");
-    });
-    $('nav ul li').click(function(){
-      $(this).addClass("active").siblings().removeClass("active");
-    });
-  </script>
 
   <script src="scripts/majorminor.js"></script>
 </body>

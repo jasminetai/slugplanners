@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SlugPlanners</title>
   <link rel="stylesheet" href="css/index.css" type="text/css">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -37,10 +36,9 @@
          </a>
          <ul class="class-show">
             <li><a href="majorminor.html">Major/Minor</a></li>
-            <li><a href="generaleducation.html">General Education</a></li>
+            <li><a href="gened.html">General Education</a></li>
          </ul>
       </li>
-      <!--
       <li><a href="#">Calendar</a></li>
       <li><a href="#">Academic Report</a></li>
       <li>
@@ -52,7 +50,6 @@
            <li><a href="#">idk</a></li>
         </ul>
       </li>
-      -->
    </ul>
   </nav> 
   
@@ -61,25 +58,6 @@
       <input type="search" class="search-data" placeholder="Search Courses" onkeypress="return event.keyCode != 13;"Z required>
     </form>
   </div>
-
-  <script>
-  $('.menu-icon').click(function(){
-    $(this).toggleClass("click");
-    $('.sidebar').toggleClass("show");
-  });
-    $('.class-btn').click(function(){
-      $('nav ul .class-show').toggleClass("show");
-      $('nav ul .first').toggleClass("rotate");
-    });
-    $('.res-btn').click(function(){
-      $('nav ul .res-show').toggleClass("show2");
-      $('nav ul .second').toggleClass("rotate");
-    });
-    $('nav ul li').click(function(){
-      $(this).addClass("active").siblings().removeClass("active");
-    });
-  </script>
-
 
   <div class="plan">
     <input type="radio" name="slider" id="tab-1" checked>
@@ -94,31 +72,25 @@
       <div class="slider"></div>
     </header>
     <div class="school-year">
-      <div class="year">
+      <div class="quarter-header">Overview</div>
+      <ul class="quarter-list">
         <div class="quarter">
-          <div class="quarter-courses">
-            <span>Overview</span>
-          </div>
-          <ul class="quart-list">
-            <div class="fall">
-              <div class="fall-name"><p>Fall</p></div>
-              <div class="fall-courses section-courses"></div>
-            </div>
-            <div class="winter">
-              <div class="winter-name"><p>Winter</p></div>
-              <div class="winter-courses section-courses"></div>
-            </div>
-            <div class="spring">
-              <div class="spring-name"><p>Spring</p></div>
-              <div class="spring-courses section-courses"></div>
-            </div>
-            <div class="summer">
-              <div class="summer-name"><p>Summer</p></div>
-              <div class="summer-courses section-courses"></div>
-            </div>
-          </ul>
+          <div class="quarter-name"><p>Fall</p></div>
+          <div class="quarter-courses"></div>
         </div>
-      </div>
+        <div class="quarter">
+          <div class="quarter-name"><p>Winter</p></div>
+          <div class="quarter-courses"></div>
+        </div>
+        <div class="quarter">
+          <div class="quarter-name"><p>Spring</p></div>
+          <div class="quarter-courses"></div>
+        </div>
+        <div class="quarter">
+          <div class="quarter-name"><p>Summer</p></div>
+          <div class="quarter-courses"></div>
+        </div>
+      </ul>
     </div> 
   </div>
 
