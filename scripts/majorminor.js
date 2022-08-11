@@ -1,17 +1,17 @@
 const fetchData = async () => {
-  const [catalogMajors, catalogMinors] = await Promise.all([
-    fetch("scripts/catalogmajors.json").then(response => response.json()).catch(e => console.log(e)),
-    fetch("scripts/catalogminors.json").then(response => response.json()).catch(e => console.log(e)),
-    //fetch("scripts/catalogcourses.json").then(response => response.json()).catch(e => console.log(e)),
+  const [majors, minors] = await Promise.all([
+    fetch("scripts/majors.json").then(response => response.json()).catch(e => console.log(e)),
+    fetch("scripts/minors.json").then(response => response.json()).catch(e => console.log(e)),
+    //fetch("scripts/courses.json").then(response => response.json()).catch(e => console.log(e)),
     //fetch("scripts/slugshort.json").then(response => response.json()).catch(e => console.log(e)),
     //fetch("scripts/sluglong.json").then(response => response.json()).catch(e => console.log(e))
   ]).catch(e => console.log(e));
-  return [catalogMajors, catalogMinors];
+  return [majors, minors];
 };
 
 fetchData().then((data) => {
-  //const [catalogMajors, catalogCourses, slugShort, slugLong] = data;
-  const [catalogMajors, catalogMinors] = data;
+  //const [majors, courses, slugShort, slugLong] = data;
+  const [majors, minors] = data;
   let prevMajorMinorInfo;
 
   // search bar
@@ -23,7 +23,7 @@ fetchData().then((data) => {
     searchDropdown.classList.add('search-dropdown');
     document.getElementsByTagName('form')[0].insertBefore(searchDropdown, document.getElementsByClassName('search-data')[0].nextSibling);
 
-    catalogMajors.forEach(major => {
+    majors.forEach(major => {
       const newMajor = document.createElement('li');
 
       // info stuff
@@ -47,7 +47,7 @@ fetchData().then((data) => {
       searchDropdown.appendChild(newMajor);
     });
 
-    catalogMinors.forEach(minor => {
+    minors.forEach(minor => {
       const newMinor = document.createElement('li');
 
       // info stuff

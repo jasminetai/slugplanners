@@ -1,93 +1,63 @@
-const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const getCatalogList = url => {
-  return axios
-    .get(url)
-    .then(response => {
-      const $ = cheerio.load(response.data);
-      const data = [];
-
-      $('#main ul li a').each(function () {
-        data.push({
-          name: $(this).text(),
-          url: `https://catalog.ucsc.edu${$(this).attr('href')}`
-        });
-      });
-
-      return data;
+module.exports.getCatalogList = async url => {
+  const response = await axios.get(url);
+  const $ = cheerio.load(response.data);
+  
+  return $('#main ul li a')
+    .map(function () {
+      return {
+        name: $(this).text(),
+        url: `https://catalog.ucsc.edu${$(this).attr('href')}`
+      };
     })
-    .catch(e => console.log(e));
+    .toArray();
 };
 
-const getCoursesFromCategory = url => {
-  return axios
-    .get(url)
-    .then(response => {
-      const $ = cheerio.load(response.data);
-      const data = [];
+module.exports.getCoursesFromList = async url => {
+  const response = await axios.get(url);
+  const $ = cheerio.load(response.data);
 
-      $('.course-name a').each(function () {
-        data.push({
-          name: $(this).contents().filter(function () {
-            return this.type === 'text';
-          }).text().trim(),
-          code: $(this).find('span').text(),
-          url: `https://catalog.ucsc.edu${$(this).attr('href')}`
-        });
-      });
-
-      return data;
+  const courseUrls = $('.course-name a')
+    .map(function () {
+      return `https://catalog.ucsc.edu${$(this).attr('href')}`;
     })
-    .catch(e => console.log(e));
+    .toArray();
+
+  const courses = [];
+  const batchSize = 20;
+  for (let i = 0, l = courseUrls.length; i < l; i += batchSize) {
+      courses.push(...await Promise.all(courseUrls.slice(x, x + batchSize).map(u => module.exports.getCourse(u))));
+  }
+
+  return courses;
 };
 
-const getCatalogCourse = url => {
-  return axios
-    .get(url)
-    .then(response => {
-      const $ = cheerio.load(response.data);
-      return $('.desc').text().trim();
-    })
-    .catch(e => console.log(e));
+module.exports.getCourse = async url => {
+  const response = await axios.get(url);
+  const $ = cheerio.load(response.data);
+  
+  const course = {
+    name: $('#main h1').contents().filter(function () { return this.type === 'text'; }).text(),
+    url: url,
+    code: $('#main h1 span').last().text(),
+    desc: $('.desc').text(),
+    credits: $('.extraFields p').filter(function() { return $(this).prev().text().includes('Credits') }).text(),
+    reqs: $('.extraFields p').filter(function() { return $(this).prev().text().includes('Requirements') }).text(),
+    quarters: $('.quarter p').text(),
+    ge: $('.genEd p').text(),
+    instructor: $('.instructor p').text(),
+    repeatCredit: $('.extraFields p').filter(function() { return $(this).prev().text().includes('Repeatable for credit') }).text(),
+    crosslisted: $('.crosslisted > p').text(),
+    crosslistedReqs: $('.xlistReq p').text()
+  };
+
+  for (const c in course) {
+    course[c].length
+      ? course[c] = course[c].trim()
+      : delete course[c];
+  }
+
+  return course;
 };
-
-getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Academic-Programs/Bachelors-Degrees')
-  .then(data => {
-    fs.writeFile('scripts/catalogmajors.json', JSON.stringify(data), function (e) {
-      if (e) {
-        console.log(e);
-      }
-    });
-  })
-  .catch(e => console.log(e));
-
-getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Academic-Programs/Undergraduate-Minors')
-  .then(data => {
-    fs.writeFile('scripts/catalogminors.json', JSON.stringify(data), function (e) {
-      if (e) {
-        console.log(e);
-      }
-    });
-  })
-  .catch(e => console.log(e));
-
-getCatalogList('https://catalog.ucsc.edu/Current/General-Catalog/Courses')
-  .then(data => {
-    return Promise.all(data.map(category =>
-      getCoursesFromCategory(category.url)
-        .then(d => {
-          return { ...category, list: d };
-        })
-        .catch(e => console.log(e))
-    ));
-  })
-  .then(data => {
-    fs.writeFile('scripts/catalogcourses.json', JSON.stringify(data), function (e) {
-      if (e) {
-        console.log(e);
-      }
-    });
-  })
-  .catch(e => console.log(e));
