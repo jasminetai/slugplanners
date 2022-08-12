@@ -25,7 +25,7 @@ const createSearchDropdown = majors => {
     infoUrl.target = '_blank';
     infoUrl.appendChild(document.createTextNode('Catalog'));
 
-    info.classList.add('course-info');
+    info.classList.add('info-container');
     info.major = major;
     info.appendChild(infoUrl);
 
@@ -60,7 +60,7 @@ const updateSearchDropdown = () => {
     option = options[i];
     if (option.textContent.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").includes(input)) {
       option.style.display = 'list-item';
-      option.getElementsByClassName('course-info')[0].style.display = 'none';
+      option.getElementsByClassName('info-container')[0].style.display = 'none';
       c++;
     } else {
       option.style.display = 'none';

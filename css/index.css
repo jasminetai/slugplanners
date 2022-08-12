@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  text-shadow: none;
-  user-select: none;
+
+* {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
@@ -38,7 +35,7 @@ body {
 }
 
 /* menu and search chaos*/
-.search{
+.search {
   position: relative;
   /* height: 45px; */
   /* width: 45px; */
@@ -46,7 +43,7 @@ body {
   margin: 0 50px;
 }
 
-.menu-icon{
+.menu-icon {
   position: absolute;
   top: 8px;
   left: 1%;
@@ -59,21 +56,21 @@ body {
   transition: left 0.4s ease;
 }
 
-.menu-icon.click{
+.menu-icon.click {
   left: 260px;
 }
 
-.menu-icon span{
+.menu-icon span {
   color: white;
   font-size: 28px;
   line-height: 45px;
 }
 
-.menu-icon.click span:before{
+.menu-icon.click span:before {
   content: '\f00d';
 }
 
-.sidebar{
+.sidebar {
   position: fixed;
   z-index: 5;
   top: 0;
@@ -85,11 +82,11 @@ body {
   transition: left 0.4s ease;
 }
 
-.sidebar.show{
+.sidebar.show {
   left: 0px;
 }
 
-.sidebar .text{ /* main menu title*/
+.sidebar .text { /* main menu title*/
   color: white;
   /*z-index: 3;*/
   font-size: 28px;
@@ -100,24 +97,22 @@ body {
   letter-spacing: 1px;
 }
 
-nav ul{
+nav ul {
   /*z-index: 4;*/
   background: #5d65aa; 
   height: 100%;
   width: 100%;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-nav ul li{ /* menu blocks */
+nav ul li { /* menu blocks */
   line-height: 60px;
   border-bottom: 1px solid #ffffff;
 }
 
-nav ul li:last-block{
-  border-bottom: 1px solid #ffffff;
-}
-
-nav ul li a{ /* menu section titles*/
+nav ul li a { /* menu section titles*/
   position: relative;
   color: white;
   text-decoration: none;
@@ -135,7 +130,7 @@ nav ul li.active a {
   border-left-color: #8bff9a;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
   background: #8c93c7; 
 }
 
@@ -163,7 +158,7 @@ nav ul ul li a { /* section sub categories*/
   padding-left: 60px;
 }
 
-nav ul li.active ul li a{
+nav ul li.active ul li a {
   /*color: #8bff9a;*/
   color: #ffffff;
   background: #575ea5; 
@@ -190,33 +185,35 @@ nav ul li a span.rotate {
 
 /*search dropdown courses*/
 .course-option {
+  line-height: 50px;
+  border-bottom: 1px solid #ffffff;
+  cursor: pointer;
+  display: none;
   color: white;
   list-style: none;
+}
+
+.course-option--match {
+  display: list-item;
+}
+
+.info-container {
+  display: none;
 }
 
 .search-dropdown {
   background: #406fd4; 
   height: 100%;
   width: 100%;
-  list-style: none;
   margin: 25px 0;
-}
-
-.search-dropdown li {
-  line-height: 50px;
-  border-bottom: 1px solid #ffffff;
-  cursor: pointer;
-}
-
-.search-dropdown li:last-block {
-  border-bottom: 1px solid #ffffff;
+  padding: 0;
 }
 
 .search-dropdown li:hover {
   background: #6385cf; 
 }
-.search-dropdown .course-info {
-  background: #ffffff; 
+
+.search-dropdown .info-container {
   background: #89a5e2; 
 }
 
@@ -365,14 +362,6 @@ button {
 
 .course-remove-button {
   margin: 0 10px;
-}
-
-.course-option {
-  display: none;
-}
-
-.course-option--match {
-  display: list-item;
 }
 
 .notif {
