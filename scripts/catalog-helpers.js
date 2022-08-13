@@ -1,8 +1,14 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+import axios from 'axios';
+import https from 'https';
+import * as cheerio from 'cheerio';
 
-module.exports.getCatalogList = async url => {
-  const response = await axios.get(url);
+const catalogClient = axios.create({
+  timeout: 60000,
+  httpsAgent: new https.Agent({ keepAlive: true })
+});
+
+const getCatalogList = async url => {
+  const response = await catalogClient.get(url);
   const $ = cheerio.load(response.data);
   
   return $('#main ul li a')
@@ -15,8 +21,8 @@ module.exports.getCatalogList = async url => {
     .toArray();
 };
 
-module.exports.getCoursesFromList = async url => {
-  const response = await axios.get(url);
+const getCoursesFromList = async url => {
+  const response = await catalogClient.get(url);
   const $ = cheerio.load(response.data);
 
   const courseUrls = $('.course-name a')
@@ -28,14 +34,14 @@ module.exports.getCoursesFromList = async url => {
   const courses = [];
   const batchSize = 20;
   for (let i = 0, l = courseUrls.length; i < l; i += batchSize) {
-      courses.push(...await Promise.all(courseUrls.slice(x, x + batchSize).map(u => module.exports.getCourse(u))));
+      courses.push(...await Promise.all(courseUrls.slice(i, i + batchSize).map(u => getCourse(u))));
   }
 
   return courses;
 };
 
-module.exports.getCourse = async url => {
-  const response = await axios.get(url);
+const getCourse = async url => {
+  const response = await catalogClient.get(url);
   const $ = cheerio.load(response.data);
   
   const course = {
@@ -60,4 +66,10 @@ module.exports.getCourse = async url => {
   }
 
   return course;
+};
+
+export {
+  getCatalogList,
+  getCoursesFromList,
+  getCourse
 };
